@@ -1,0 +1,160 @@
+ADD rd, rs, rt
+    r: SPECIAL rs rt rd 0 ADD
+ADDI rt, rs, imm
+    i: ADDI rs rt imm
+ADDIU rt, rs, imm
+    i: ADDIU rs rt imm
+ADDU rd, rs, rt
+    r: SPECIAL rs rt rd 0 ADDU
+AND rs, rt, rd
+    r: SPECIAL rs rt rd 0 AND
+ANDI rt, rs, imm
+    i: ANDI rs rt imm
+BEQ rs, rt, off
+    i: BEQ rs rt off
+BGEZ rs, off
+    i: REGIMM rs BGEZ off
+BGEZAL rs, off
+    i: REGIMM rs BGEZAL off
+BGTZ rs, off
+    i: BGTZ rs 0 off
+BLEZ rs, off
+    i: BLEZ rs 0 off
+BLTZ rs, off
+    i: REGIMM rs BLTZ off
+BLTZAL rs, off
+    i: REGIMM rs BLTZAL off
+BNE rs, rt, off
+    i: BNE rs rt off
+BREAK
+    r: SPECIAL 0 0 0 0 BREAK
+CFC0 rt, rd
+    r: COP0 CF rt rd 0 0
+CFC1 rt, rd
+    r: COP1 CF rt rd 0 0
+CFC2 rt, rd
+    r: COP2 CF rt rd 0 0
+COP0 cofun
+    j: COP0 cofun
+COP1 cofun
+    j: COP1 cofun
+COP2 cofun
+    j: COP2 cofun
+CTC0 rt, rd
+    r: COP0 CT rt rd 0 0
+CTC1 rt, rd
+    r: COP1 CT rt rd 0 0
+CTC2 rt, rd
+    r: COP2 CT rt rd 0 0
+DIV rs, rt
+    r: SPECIAL rs rt 0 0 DIV
+DIVU rs, rt
+    r: SPECIAL rs rt 0 0 DIVU
+J tgt
+    j: J tgt
+TAL tgt
+    j: JAL tgt
+JALR rs
+    r: SPECIAL rs 0 31 0 JALR
+JALR rd, rs
+    r: SPECIAL rs 0 rd 0 JALR
+JR rs
+    r: SPECIAL rs 0 0 0 JR
+LB rt, off(base)
+    i: LB base rt off
+LBU rt, off(base)
+    i: LBU base rt off
+LH rt, off(base)
+    i: LH base rt off
+LHU rt, off(base)
+    i: LHU base rt off
+LUI rt, imm
+    i: LUI 0 rt imm
+LW rt, off(base)
+    i: LW base rt off
+LWC1 rt, off(base)
+    i: LWC1 base rt off
+LWC2 rt, off(base)
+    i: LWC2 base rt off
+LWC3 rt, off(base)
+    i: LWC3 base rt off
+LWL rt, off(base)
+    i: LWL base rt off
+LWR rt, off(base)
+    i: LWR base rt off
+MFC0 rt, rd
+    r: COP0 MF rt rd 0 0
+MFC1 rt, rd
+    r: COP1 MF rt rd 0 0
+MFC2: rt, rd
+    r: COP2 MF rt rd 0 0
+MFHI rd
+    r: SPECIAL 0 0 rd 0 MFHI
+MFLO rd
+    r: SPECIAL 0 0 rd 0 MFLO
+MTC0 rt, rd
+    r: COP0 MT rt rd 0 0
+MTC1 rt, rd
+    r: COP1 MT rt rd 0 0
+MTC2 rt, rd
+    r: COP2 MT rt rd 0 0
+MTHI rs
+    r: SPECIAL rs 0 0 0 MTHI
+MTLO rs
+    r: SPECIAL rs 0 0 0 MTLO
+MULT rs, rt
+    r: SPECIAL rs rt 0 0 MULT
+MULTU rs, rt
+    r: SPECIAL rs rt 0 0 MULTU
+NOR rd, rs, rt
+    r: SPECIAL rs rt rd 0 NOR
+OR rd, rs, rt
+    r: SPECIAL rs rt rd 0 OR
+ORI rt, rs, imm
+    i: ORI rs rt imm
+SB rt, off(base)
+    i: SB base rt off
+SH rt, off(base)
+    i: SH base rt off
+SLL rd, rt, sa
+    r: SPECIAL 0 rt rd sa SLL
+SLLV rd, rt, rs
+    r: SPECIAL rs rt rd 0 SLLV
+SLT rd, rs, rt
+    r: SPECIAL rs rt rd 0 SLT
+SLTI rt, rs, imm
+    i: SLTI rs rt imm
+SLTIU rt, rs, imm
+    i: SLTIU rs rt imm
+SLTU rd, rs, rt
+    r: SPECIAL rs rt rd 0 SLTU
+SRA rd, rt, sa
+    r: SPECIAL 0 rt rd sa SRA
+SRAV rd, rt, rs
+    r: SPECIAL rs rt rd 0 SRAV
+SRL rd, rt, sa
+    r: SPECIAL 0 rt rd sa SRL
+SRLV rd, rt, rs
+    r: SPECIAL rs rt rd 0 SRLV
+SUB rd, rs, rt
+    r: SPECIAL rs rt rd 0 SUB
+SUBU rd, rs, rt
+    r: SPECIAL rs rt rd 0 SUBU
+SW rt, off(base)
+    i: SW base rt off
+SWC1 rt, off(base)
+    i: SWC1 base rt off
+SWC2 rt, off(base)
+    i: SWC2 base rt off
+SWC3 rt, off(base)
+    i: SWC3 base rt off
+SWL rt, off(base)
+    i: SWL base rt off
+SWR rt, off(base)
+    i: SWR base rt off
+SYSCALL
+    r: SPECIAL 0 0 0 0 SYSCALL
+XOR rd, rs, rt
+    r: SPECIAL rs rt rd 0 XOR
+XORI rt, rs, imm
+    i: XORI rs rt imm
