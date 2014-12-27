@@ -86,7 +86,7 @@ MFC0 rt, rd
     r: COP0 MF rt rd 0 0
 MFC1 rt, rd
     r: COP1 MF rt rd 0 0
-MFC2: rt, rd
+MFC2 rt, rd
     r: COP2 MF rt rd 0 0
 MFHI rd
     r: SPECIAL 0 0 rd 0 MFHI

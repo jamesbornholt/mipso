@@ -17,7 +17,7 @@ XORI    14
 LUI     15
 COP0    16
 COP1    17
-C0P2    18
+COP2    18
 LB      32
 LH      33
 LWL     34
@@ -51,7 +51,7 @@ BREAK   13
 MFHI    16
 MTHI    17
 MFLO    18
-MTHI    19
+MTLO    19
 MULT    24
 MULTU   25
 DIV     26
