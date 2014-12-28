@@ -37,7 +37,7 @@ current_type = "Opcode"
 constants_file = open(constants_path, "r")
 
 constants_go_file = open(constants_go_path, "w")
-constants_go_file.write("package main\n\n")
+constants_go_file.write("package isa\n\n")
 constants_go_file.write("const (\n")
 
 for line in constants_file:
@@ -59,7 +59,7 @@ insns_file = open(insns_path, "r")
 current_insn = None
 
 emitter_go_file = open(emitter_go_path, "w")
-emitter_go_file.write("package main\n\n")
+emitter_go_file.write("package isa\n\n")
 
 for line in insns_file:
     line = line.strip()

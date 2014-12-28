@@ -1,4 +1,4 @@
-package main
+package isa
 
 type Opcode int
 type Register int

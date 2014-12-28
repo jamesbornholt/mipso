@@ -1,4 +1,4 @@
-package main
+package isa
 
 const (
 	SPECIAL Opcode   = 0
