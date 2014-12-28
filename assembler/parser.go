@@ -35,45 +35,63 @@ func ParseFile(path string) ([]Statement, error) {
     scan := bufio.NewScanner(f)
 
     stmts := make([]Statement, 0)
+    stmt_chan := make(chan Statement, 2)
+    done_chan := make(chan bool)
+
+    go func() {
+        for {
+            s, more := <-stmt_chan
+            if more {
+                stmts = append(stmts, s)
+            } else {
+                done_chan <- true
+                return
+            }
+        }
+    }()
+
     for scan.Scan() {
         line := scan.Text()
-        s, err := parseStatement(line)
-        if err != nil {
-            return stmts, err
-        }
-        stmts = append(stmts, s)
+        parseStatement(line, stmt_chan)
         fmt.Printf("%s\n", line)
     }
+    close(stmt_chan)
+
+    <-done_chan
 
     return stmts, nil
 }
 
-func parseStatement(line string) (stmt Statement, err error) {
+func parseStatement(line string, stmt_chan chan Statement) {
     line = strings.TrimSpace(line)
     switch {
     case len(line) == 0:
-        stmt, err = Statement{}, nil
+        // nothing
     case line[0] == '.':
-        stmt, err = parseDirective(line)
+        parseDirective(line, stmt_chan)
     case strings.ContainsRune(line, ':'):
-        stmt, err = parseLabel(line)
+        i := strings.IndexRune(line, ':')
+        parseLabel(line[:i], stmt_chan)
+        if len(line) > i+1 {
+            parseInstruction(line[i+1:], stmt_chan)
+        }
     default:
-        stmt, err = parseInstruction(line)
+        parseInstruction(line, stmt_chan)
     }
     return
 }
 
-func parseDirective(line string) (stmt Statement, err error) {
+func parseDirective(line string, stmt_chan chan Statement) {
     s := Statement{Typ:stmtDirective, Directive:line}
-    return s, nil
+    stmt_chan <- s
 }
 
-func parseLabel(line string) (stmt Statement, err error) {
+func parseLabel(line string, stmt_chan chan Statement) {
     s := Statement{Typ:stmtLabel, Label:line}
-    return s, nil
+    stmt_chan <- s
 }
 
-func parseInstruction(line string) (stmt Statement, err error) {
+func parseInstruction(line string, stmt_chan chan Statement) {
     s := Statement{Typ:stmtInstruction, Insn: isa.InsnJ{}}
-    return s, nil
+    stmt_chan <- s
 }
