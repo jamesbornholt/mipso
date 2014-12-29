@@ -105,21 +105,12 @@ func parseInstruction(line string, stmt_chan chan Statement) {
 	}
 
 	opcode := line[:i]
-	line = eatSpace(line[i:])
-	operands := strings.Split(line, ",")
+	operand_string := line[i:]
+	operands := strings.Split(operand_string, ",")
 	for n := range operands {
 		operands[n] = strings.TrimSpace(operands[n])
 	}
 
 	insn := Instruction{Opcode: opcode, Operands: operands}
 	stmt_chan <- Statement{Typ: stmtInstruction, Insn: insn}
-}
-
-func eatSpace(s string) string {
-	for n := range s {
-		if s[n] != ' ' && s[n] != '\t' {
-			return s[n:]
-		}
-	}
-	return ""
 }
