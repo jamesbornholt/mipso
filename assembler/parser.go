@@ -105,7 +105,7 @@ func parseInstruction(line string, stmt_chan chan Statement) {
 	}
 
 	opcode := line[:i]
-	line = eatSpace(line)
+	line = eatSpace(line[i:])
 	operands := strings.Split(line, ",")
 	for n := range operands {
 		operands[n] = strings.TrimSpace(operands[n])
@@ -117,7 +117,7 @@ func parseInstruction(line string, stmt_chan chan Statement) {
 
 func eatSpace(s string) string {
 	for n := range s {
-		if s[n] == ' ' || s[n] == '\t' {
+		if s[n] != ' ' && s[n] != '\t' {
 			return s[n:]
 		}
 	}
