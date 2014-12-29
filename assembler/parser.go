@@ -5,15 +5,18 @@ import "fmt"
 import "os"
 import "strings"
 
-import "github.com/jamesbornholt/mipso/isa"
-
 type Statement struct {
     Typ statementType
-    Insn isa.Instruction
+    Insn Instruction
     Label string
     // TODO: data
     // TODO: symdef
     Directive string
+}
+
+type Instruction struct {
+    Opcode string
+    Operands []string
 }
 
 type statementType int
@@ -92,6 +95,30 @@ func parseLabel(line string, stmt_chan chan Statement) {
 }
 
 func parseInstruction(line string, stmt_chan chan Statement) {
-    s := Statement{Typ:stmtInstruction, Insn: isa.InsnJ{}}
-    stmt_chan <- s
+    i := strings.IndexAny(line, " \t")
+    if i == -1 {
+        opcode := line
+        stmt_chan <- Statement{Typ:stmtInstruction, 
+                               Insn: Instruction{Opcode: opcode}}
+        return
+    }
+
+    opcode := line[:i]
+    line = eatSpace(line)
+    operands := strings.Split(line, ",")
+    for n := range(operands) {
+        operands[n] = strings.TrimSpace(operands[n])
+    }
+
+    insn := Instruction{Opcode: opcode, Operands: operands}
+    stmt_chan <- Statement{Typ:stmtInstruction, Insn:insn}
+}
+
+func eatSpace(s string) string {
+    for n := range(s) {
+        if s[n] == ' ' || s[n] == '\t' {
+            return s[n:]
+        }
+    }
+    return ""
 }
