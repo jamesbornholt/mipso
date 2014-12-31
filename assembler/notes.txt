@@ -1,0 +1,26 @@
+type Instruction struct {
+    constructor func // this won't work -- different types for each function
+}
+
+dynamic dispatch over the opcode + num operands
+    - pass the Instruction to the constructor function
+    - it tries to parse each operand according to what it expects for types
+    - then pass to an emitter function with those arguments
+        - why? assembler might want to call multiple emitters
+        - one psuedoinsn != one insn
+
+what about backpatching?
+    - we really want a
+            type Assembler struct {
+                insns []isa.Instruction
+                backpatches map[idx]string
+            }
+    - in general, how should we keep track of the PC?
+
+so we need
+    - a parse function for each insn
+        - signature: (insn Instruction) error
+    - an emit function for each insn
+        - signatures vary, and can't fail
+        - writes to Assembler's insns slice
+
